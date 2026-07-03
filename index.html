@@ -293,6 +293,59 @@
       white-space:nowrap;opacity:0;animation:hintIn 0.5s 2.2s ease forwards;
     }
     @keyframes hintIn { to{opacity:1} }
+
+    /* ── エラスモサウルス演出（あさVer） ── */
+    #elasmoOverlay {
+      position:fixed;inset:0;z-index:99999;
+      background:rgba(0,20,45,0.88);
+      display:flex;align-items:flex-end;justify-content:center;
+      cursor:pointer;overflow:hidden;
+    }
+    #elasmoOverlay.shake { animation:trexShake 0.1s ease infinite; }
+    #elasmoBgGlow {
+      position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse at 60% 60%,rgba(0,180,255,0.3) 0%,transparent 65%);
+      animation:glowPulse 0.45s ease infinite alternate;
+    }
+    #elasmoSvgWrap {
+      position:relative;flex-shrink:0;
+      width:min(94vw,540px);
+      filter:drop-shadow(0 0 30px rgba(0,180,255,0.55));
+      animation:trexRise 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    #elasmoNeck {
+      transform-box:fill-box;
+      transform-origin:60% 96%;
+      animation:neckSway 1.2s 0.6s ease-in-out infinite alternate;
+    }
+    @keyframes neckSway { from{transform:rotate(-2deg)} to{transform:rotate(3deg)} }
+    #elasmoRoarLabel {
+      position:absolute;top:6%;left:50%;
+      white-space:nowrap;
+      font-size:clamp(2.2rem,8vw,5.5rem);font-weight:900;
+      font-family:Impact,'Arial Black',sans-serif;letter-spacing:4px;
+      color:#00CFFF;
+      opacity:0;
+      animation:roarBoom 0.3s 0.75s cubic-bezier(0.175,0.885,0.32,1.275) forwards,
+                elasmoFlicker 0.18s 1.05s ease infinite alternate;
+      transform:translateX(-50%);
+    }
+    @keyframes elasmoFlicker {
+      from{text-shadow:0 0 20px rgba(0,190,255,0.9),0 0 50px rgba(0,140,255,0.6)}
+      to{text-shadow:0 0 45px rgba(0,220,255,1),0 0 90px rgba(0,150,255,0.9),0 0 130px rgba(0,100,255,0.4)}
+    }
+    .elasmoSplash {
+      position:absolute;bottom:2%;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(190,235,255,0.8),rgba(80,170,220,0.15));
+      pointer-events:none;
+      animation:dustPuff 1.2s ease-out forwards;
+    }
+    #elasmoTapHint {
+      position:absolute;bottom:3%;left:50%;transform:translateX(-50%);
+      color:rgba(255,255,255,0.45);font-size:clamp(0.75rem,2vw,1rem);
+      white-space:nowrap;opacity:0;animation:hintIn 0.5s 1.8s ease forwards;
+    }
   </style>
 </head>
 <body>
@@ -614,7 +667,7 @@ function checkAll() {
   if (all.length === done.length) {
     cel.style.display = 'block';
     confetti();
-    setTimeout(showTRex, 800);
+    setTimeout(currentMode === 'morning' ? showElasmosaurus : showTRex, 800);
   } else {
     cel.style.display = 'none';
   }
@@ -767,6 +820,120 @@ function showTRex() {
     } catch(e) {}
   }
   playRoar();
+
+  setTimeout(() => {
+    ov.style.transition = 'opacity 0.8s';
+    ov.style.opacity = '0';
+    setTimeout(() => ov.remove(), 800);
+  }, 4500);
+
+  ov.addEventListener('click', () => {
+    ov.style.transition = 'opacity 0.3s';
+    ov.style.opacity = '0';
+    setTimeout(() => ov.remove(), 300);
+  });
+}
+
+/* ── エラスモサウルス演出（あさVer） ── */
+function showElasmosaurus() {
+  if (document.getElementById('elasmoOverlay')) return;
+  const ov = document.createElement('div');
+  ov.id = 'elasmoOverlay';
+  ov.innerHTML = `
+    <div id="elasmoBgGlow"></div>
+    <div id="elasmoRoarLabel">ザバァァン!!</div>
+    <div id="elasmoSvgWrap">
+      <svg viewBox="0 0 560 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <!-- 水面 -->
+        <path d="M 55,400 Q 70,378 110,382 Q 150,360 200,372 Q 240,352 300,362 Q 370,350 420,368 Q 470,360 500,382 Q 525,390 520,412 Q 480,440 300,444 Q 110,440 60,415 Z" fill="#A5D8EC"/>
+        <ellipse cx="300" cy="415" rx="215" ry="30" fill="#C8EAF6" opacity="0.7"/>
+
+        <!-- しっぽ -->
+        <path d="M 425,320 Q 495,308 542,285 Q 515,340 448,362 Q 430,350 425,320 Z" fill="#6E8DB1"/>
+
+        <!-- 奥のヒレ -->
+        <path d="M 240,380 Q 200,420 165,432 Q 195,438 230,420 Q 252,404 258,388 Z" fill="#54719A"/>
+
+        <!-- 胴体 -->
+        <ellipse cx="320" cy="345" rx="128" ry="78" fill="#7F9DBE"/>
+        <ellipse cx="300" cy="315" rx="90" ry="42" fill="#93AFCB" opacity="0.5"/>
+
+        <!-- おなか -->
+        <ellipse cx="330" cy="390" rx="102" ry="46" fill="#F4E7C8"/>
+
+        <!-- 手前のヒレ -->
+        <path d="M 265,400 Q 235,440 190,452 Q 225,458 265,440 Q 288,424 292,406 Q 278,398 265,400 Z" fill="#5E7DA4"/>
+        <path d="M 370,402 Q 372,442 348,458 Q 388,452 404,428 Q 410,412 402,400 Q 385,396 370,402 Z" fill="#5E7DA4"/>
+
+        <!-- 首と頭（ゆったり揺れる） -->
+        <g id="elasmoNeck">
+          <path d="M 300,320 C 280,250 250,190 252,120 L 218,118 C 214,190 240,255 262,325 Z" fill="#7F9DBE"/>
+          <ellipse cx="240" cy="105" rx="42" ry="28" fill="#7F9DBE" transform="rotate(-6 240 105)"/>
+          <path d="M 244,122 Q 266,130 284,120 Q 276,136 254,138 Q 240,134 238,124 Z" fill="#F4E7C8"/>
+          <path d="M 250,118 Q 268,124 283,114" stroke="#4A6076" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="252" cy="98" r="6.5" fill="#26343F"/>
+          <circle cx="254" cy="96" r="2.2" fill="white"/>
+          <circle cx="274" cy="97" r="1.8" fill="#4A6076"/>
+        </g>
+
+        <!-- 水しぶき -->
+        <path d="M 205,372 Q 190,352 196,332 Q 178,348 186,372 Z" fill="#E9F8FE" opacity="0.9"/>
+        <path d="M 448,362 Q 462,340 456,320 Q 474,338 466,362 Z" fill="#E9F8FE" opacity="0.9"/>
+        <circle cx="160" cy="330" r="6" fill="#DFF4FB"/>
+        <circle cx="176" cy="302" r="4" fill="#DFF4FB"/>
+        <circle cx="472" cy="308" r="5" fill="#DFF4FB"/>
+        <circle cx="452" cy="284" r="3" fill="#DFF4FB"/>
+        <path d="M 120,408 Q 160,398 200,408" stroke="#E9F8FE" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M 380,414 Q 420,404 460,412" stroke="#E9F8FE" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
+      </svg>
+    </div>
+    <div id="elasmoTapHint">タップで閉じる</div>
+  `;
+  document.body.appendChild(ov);
+
+  ov.classList.add('shake');
+  setTimeout(() => ov.classList.remove('shake'), 1800);
+
+  setTimeout(() => {
+    [[22, 26], [40, 20], [15, 16], [55, 22]].forEach(([lp, sz], i) => {
+      const splash = document.createElement('div');
+      splash.className = 'elasmoSplash';
+      splash.style.cssText = `left:${lp}%;width:${sz}px;height:${sz}px;animation-delay:${i*0.13}s`;
+      ov.appendChild(splash);
+    });
+  }, 500);
+
+  function playSplashRoar() {
+    try {
+      const ac = new (window.AudioContext || window.webkitAudioContext)();
+      const dur = 2.4, sr = ac.sampleRate;
+      const buf = ac.createBuffer(1, sr * dur, sr);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) {
+        const t = i / sr;
+        const splashEnv = t < 0.35 ? Math.max(0, 1 - t / 0.35) : 0;
+        const splashNoise = (Math.random() - 0.5) * 2 * splashEnv * 0.6;
+        const gt = Math.max(0, t - 0.15);
+        const groanEnv = Math.min(1, gt * 4) * Math.pow(Math.max(0, 1 - gt / (dur - 0.15)), 0.5);
+        const f = 65 + gt * 20;
+        const vib = Math.sin(2 * Math.PI * 7 * t) * 0.018;
+        const groan = (
+          Math.sin(2 * Math.PI * f * (1 + vib) * gt) * 0.38 +
+          Math.sin(2 * Math.PI * f * 1.48 * gt) * 0.22 +
+          Math.sin(2 * Math.PI * f * 2.02 * gt) * 0.14
+        ) * groanEnv;
+        d[i] = (splashNoise + groan) * 0.8;
+      }
+      const src = ac.createBufferSource();
+      src.buffer = buf;
+      const lp = ac.createBiquadFilter();
+      lp.type = 'lowpass'; lp.frequency.value = 500;
+      const g = ac.createGain(); g.gain.value = 1.3;
+      src.connect(lp); lp.connect(g); g.connect(ac.destination);
+      src.start();
+    } catch(e) {}
+  }
+  playSplashRoar();
 
   setTimeout(() => {
     ov.style.transition = 'opacity 0.8s';
