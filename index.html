@@ -1161,90 +1161,144 @@ function showMosasaurus() {
     <div id="mosaRoarLabel">ザバァァン!!</div>
     <div id="mosaSvgWrap">
       <svg viewBox="0 0 560 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="mBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3E6A54"/>
+            <stop offset="0.5" stop-color="#2F4E3D"/>
+            <stop offset="1" stop-color="#B7C79A"/>
+          </linearGradient>
+          <linearGradient id="mHead" x1="0" y1="0" x2="0.35" y2="1">
+            <stop offset="0" stop-color="#4E7A5C"/>
+            <stop offset="0.6" stop-color="#345740"/>
+            <stop offset="1" stop-color="#243F30"/>
+          </linearGradient>
+          <linearGradient id="mLowJaw" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3B6048"/>
+            <stop offset="1" stop-color="#C6D2A9"/>
+          </linearGradient>
+          <linearGradient id="mFin" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#32563F"/>
+            <stop offset="1" stop-color="#20372A"/>
+          </linearGradient>
+          <linearGradient id="mTail" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#345740"/>
+            <stop offset="1" stop-color="#1F362A"/>
+          </linearGradient>
+          <radialGradient id="mSheen" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#E2F4E7" stop-opacity="0.5"/>
+            <stop offset="1" stop-color="#E2F4E7" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="mMouth" cx="0.35" cy="0.45" r="0.85">
+            <stop offset="0" stop-color="#8E4C59"/>
+            <stop offset="1" stop-color="#572935"/>
+          </radialGradient>
+          <linearGradient id="mTooth" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFFDF3"/>
+            <stop offset="1" stop-color="#D6CBAB"/>
+          </linearGradient>
+          <linearGradient id="mWater" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#BFE8F3"/>
+            <stop offset="1" stop-color="#7FB9D2"/>
+          </linearGradient>
+          <filter id="mSoft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
+          <filter id="mSoft2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.2"/></filter>
+        </defs>
+
         <!-- 奥の水面 -->
-        <path d="M 0,360 Q 80,344 150,354 Q 230,338 300,350 Q 380,336 450,352 Q 520,342 560,356 L 560,460 L 0,460 Z" fill="#2C6C86" opacity="0.55"/>
+        <path d="M 0,362 Q 90,348 160,358 Q 240,344 300,354 Q 380,342 452,356 Q 520,348 560,360 L 560,460 L 0,460 Z" fill="#2C6C86" opacity="0.5"/>
+        <!-- 体の影 -->
+        <ellipse cx="272" cy="372" rx="182" ry="26" fill="#12455E" opacity="0.5" filter="url(#mSoft)"/>
 
         <g id="mosaBody">
           <!-- しっぽ -->
-          <path d="M 150,332 Q 80,340 34,372 Q 74,360 120,360 Q 116,386 150,394 Q 170,360 174,330 Z" fill="#2E4A39"/>
-          <path d="M 42,368 Q 62,384 94,388 Q 74,362 120,360 Q 84,352 42,368 Z" fill="#233D2E"/>
+          <path d="M 168,330 Q 96,336 40,360 Q 16,372 30,382 Q 60,368 104,364 Q 96,392 120,404 Q 150,392 168,366 Q 180,348 182,330 Z" fill="url(#mTail)"/>
+          <path d="M 40,360 Q 72,374 104,364 Q 70,358 40,360 Z" fill="#18291F" opacity="0.55"/>
 
           <!-- 奥のヒレ -->
-          <path d="M 252,350 Q 236,404 208,430 Q 248,416 270,384 Q 278,362 274,348 Z" fill="#294435"/>
+          <path d="M 250,352 Q 232,406 202,432 Q 246,420 272,386 Q 282,364 276,348 Z" fill="url(#mFin)" opacity="0.8"/>
 
-          <!-- 胴体 -->
-          <ellipse cx="272" cy="322" rx="156" ry="66" fill="#33513E" transform="rotate(-11 272 322)"/>
-          <!-- 背中の濃い陰 -->
-          <path d="M 130,300 Q 250,250 392,286 Q 300,270 200,286 Q 158,294 130,300 Z" fill="#25402E" opacity="0.9"/>
-          <!-- 明るい側面 -->
-          <ellipse cx="280" cy="338" rx="140" ry="42" fill="#5C7C60" opacity="0.5" transform="rotate(-11 280 338)"/>
+          <!-- 胴体（なめらかなシルエット） -->
+          <path d="M 150,332 Q 210,250 300,252 Q 356,254 392,286 Q 402,300 398,318 Q 384,352 320,372 Q 250,392 190,384 Q 150,378 138,360 Q 132,346 150,332 Z" fill="url(#mBody)"/>
+          <!-- 背の陰影 -->
+          <path d="M 160,318 Q 222,260 300,262 Q 356,264 390,292 Q 320,270 240,282 Q 190,292 160,318 Z" fill="#24402E" opacity="0.5" filter="url(#mSoft2)"/>
+          <!-- 背のリムライト -->
+          <path d="M 176,300 Q 236,258 300,260 Q 352,262 382,284" stroke="#A6CFAE" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.5" filter="url(#mSoft2)"/>
+          <!-- 濡れツヤ -->
+          <ellipse cx="272" cy="300" rx="72" ry="24" fill="url(#mSheen)" transform="rotate(-14 272 300)"/>
 
-          <!-- 背びれ（キール） -->
-          <path d="M 362,262 Q 300,242 210,266 Q 150,282 118,300" stroke="#22382B" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.85"/>
+          <!-- 背びれ（スクート） -->
+          <path d="M 360,272 L 366,257 L 375,272 Z" fill="#22382B"/>
+          <path d="M 322,262 L 328,246 L 338,262 Z" fill="#22382B"/>
+          <path d="M 282,257 L 288,241 L 298,257 Z" fill="#22382B"/>
+          <path d="M 242,261 L 248,246 L 258,261 Z" fill="#22382B"/>
+          <path d="M 204,271 L 210,257 L 220,271 Z" fill="#22382B"/>
+
+          <!-- 鱗の質感 -->
+          <path d="M 190,320 Q 250,306 322,312" stroke="#25402E" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <path d="M 196,338 Q 258,326 330,334" stroke="#25402E" stroke-width="1.5" fill="none" opacity="0.32"/>
+          <path d="M 212,356 Q 270,348 330,356" stroke="#25402E" stroke-width="1.5" fill="none" opacity="0.28"/>
+          <g fill="#2A4635" opacity="0.4">
+            <circle cx="232" cy="300" r="2.4"/><circle cx="266" cy="296" r="2.4"/><circle cx="300" cy="298" r="2.2"/>
+            <circle cx="248" cy="316" r="2.2"/><circle cx="284" cy="314" r="2.2"/>
+          </g>
 
           <!-- 手前のヒレ -->
-          <path d="M 336,330 Q 322,386 300,410 Q 346,392 364,352 Q 368,336 358,326 Z" fill="#2B4736"/>
-          <path d="M 340,338 Q 332,368 320,392" stroke="#1F332A" stroke-width="2" fill="none" opacity="0.6"/>
+          <path d="M 322,332 Q 306,392 282,416 Q 330,398 352,356 Q 358,338 346,328 Q 332,326 322,332 Z" fill="url(#mFin)"/>
+          <path d="M 328,340 Q 316,374 300,398" stroke="#1A2C21" stroke-width="2" fill="none" opacity="0.5"/>
 
-          <!-- 首（胴と頭をつなぐ） -->
-          <path d="M 356,262 Q 362,306 398,332 Q 420,342 374,300 Q 366,282 372,262 Z" fill="#33513E"/>
+          <!-- 首（胴と頭のつなぎ） -->
+          <path d="M 360,266 Q 372,304 402,330 Q 424,340 388,300 Q 374,282 378,264 Z" fill="url(#mHead)"/>
 
           <!-- 口の中 -->
-          <path d="M 396,286 Q 452,208 500,166 Q 488,224 470,238 Q 430,266 396,286 Z" fill="#6E3A46"/>
-
-          <!-- 下あご -->
-          <path d="M 392,290 C 420,262 452,240 478,224 C 484,230 484,240 478,246 C 452,262 420,284 400,302 C 394,300 392,296 392,290 Z" fill="#37573F"/>
-          <path d="M 392,290 C 420,262 452,240 478,224 C 470,236 448,252 420,272 Q 404,284 392,290 Z" fill="#C7D0B0" opacity="0.5"/>
-          <!-- 下の歯 -->
-          <path d="M 404,286 L 402,272 L 412,282 Z" fill="#F2ECD6"/>
-          <path d="M 420,275 L 419,261 L 429,271 Z" fill="#F2ECD6"/>
-          <path d="M 437,264 L 437,250 L 446,260 Z" fill="#F2ECD6"/>
-          <path d="M 453,254 L 454,240 L 462,250 Z" fill="#F2ECD6"/>
-          <path d="M 468,244 L 470,231 L 477,241 Z" fill="#F2ECD6"/>
+          <path d="M 398,288 Q 452,214 502,168 Q 494,222 476,238 Q 436,268 398,288 Z" fill="url(#mMouth)"/>
+          <path d="M 470,240 Q 452,252 430,266" stroke="#BE7B89" stroke-width="3" fill="none" opacity="0.45" stroke-linecap="round"/>
 
           <!-- 上あご・頭 -->
-          <path d="M 360,266 C 392,216 444,178 500,152 C 506,162 506,171 500,178 C 452,206 414,240 392,290 C 378,284 366,276 360,266 Z" fill="#31503C"/>
-          <!-- 頭の明るい部分 -->
-          <path d="M 372,258 C 400,220 446,188 494,162 C 456,190 424,222 402,262 Q 386,262 372,258 Z" fill="#6E8C6E" opacity="0.42"/>
-          <!-- 上の歯 -->
-          <path d="M 402,286 L 402,300 L 411,290 Z" fill="#F2ECD6"/>
-          <path d="M 418,272 L 419,287 L 428,276 Z" fill="#F2ECD6"/>
-          <path d="M 435,258 L 437,273 L 445,262 Z" fill="#F2ECD6"/>
-          <path d="M 452,245 L 454,260 L 461,249 Z" fill="#F2ECD6"/>
-          <path d="M 468,233 L 471,247 L 477,236 Z" fill="#F2ECD6"/>
-          <path d="M 483,222 L 486,235 L 492,225 Z" fill="#F2ECD6"/>
+          <path d="M 358,268 C 390,214 446,176 504,150 C 511,160 511,170 504,178 C 456,206 416,242 394,292 C 380,286 366,278 358,268 Z" fill="url(#mHead)"/>
+          <!-- 頭のリムライト -->
+          <path d="M 372,258 C 402,216 450,184 498,160" stroke="#93C29D" stroke-width="3.5" fill="none" opacity="0.45" stroke-linecap="round" filter="url(#mSoft2)"/>
 
-          <!-- 鼻の穴 -->
-          <ellipse cx="474" cy="176" rx="5" ry="3" fill="#1B2C22" transform="rotate(-28 474 176)"/>
+          <!-- 下あご -->
+          <path d="M 392,292 C 420,264 454,242 480,226 C 487,232 487,242 481,249 C 456,266 424,288 402,306 C 395,304 392,299 392,292 Z" fill="url(#mLowJaw)"/>
+
+          <!-- 上の歯（下向き） -->
+          <path d="M 404,290 L 405,304 L 413,293 Z" fill="url(#mTooth)"/>
+          <path d="M 420,277 L 422,292 L 430,280 Z" fill="url(#mTooth)"/>
+          <path d="M 437,264 L 439,279 L 447,267 Z" fill="url(#mTooth)"/>
+          <path d="M 454,252 L 456,267 L 463,255 Z" fill="url(#mTooth)"/>
+          <path d="M 471,241 L 474,255 L 480,244 Z" fill="url(#mTooth)"/>
+          <path d="M 487,231 L 490,244 L 496,234 Z" fill="url(#mTooth)"/>
+          <!-- 下の歯（上向き） -->
+          <path d="M 406,289 L 404,276 L 413,286 Z" fill="url(#mTooth)"/>
+          <path d="M 421,278 L 420,264 L 430,275 Z" fill="url(#mTooth)"/>
+          <path d="M 438,266 L 438,251 L 447,263 Z" fill="url(#mTooth)"/>
+          <path d="M 455,255 L 456,241 L 464,252 Z" fill="url(#mTooth)"/>
+          <path d="M 471,246 L 473,233 L 480,244 Z" fill="url(#mTooth)"/>
+
+          <!-- 鼻先の穴 -->
+          <ellipse cx="480" cy="174" rx="5" ry="3" fill="#142118" transform="rotate(-30 480 174)"/>
           <!-- 目 -->
-          <circle cx="408" cy="230" r="11" fill="#182A1E"/>
-          <circle cx="408" cy="230" r="7.5" fill="#D3A23E"/>
-          <circle cx="409" cy="231" r="3.4" fill="#101A11"/>
-          <circle cx="411" cy="227" r="2.1" fill="#FFFFFF" opacity="0.9"/>
-          <path d="M 396,219 Q 410,212 424,220" stroke="#22382B" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-
-          <!-- うろこ / 質感 -->
-          <circle cx="220" cy="300" r="3" fill="#25402E" opacity="0.5"/>
-          <circle cx="256" cy="292" r="3" fill="#25402E" opacity="0.5"/>
-          <circle cx="292" cy="292" r="2.6" fill="#25402E" opacity="0.5"/>
-          <circle cx="240" cy="318" r="2.6" fill="#25402E" opacity="0.4"/>
-          <path d="M 180,312 Q 240,300 310,306" stroke="#25402E" stroke-width="1.4" fill="none" opacity="0.4"/>
-          <path d="M 200,330 Q 262,322 332,330" stroke="#25402E" stroke-width="1.4" fill="none" opacity="0.35"/>
+          <ellipse cx="410" cy="232" rx="13" ry="12" fill="#152219"/>
+          <circle cx="410" cy="232" r="8.5" fill="#D9A83F"/>
+          <ellipse cx="411" cy="233" rx="3.4" ry="4.4" fill="#0E140D"/>
+          <circle cx="413.5" cy="228" r="2.3" fill="#FFFFFF" opacity="0.95"/>
+          <path d="M 395,220 Q 410,211 426,221" stroke="#20372A" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M 398,244 Q 412,250 424,244" stroke="#20372A" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.55"/>
         </g>
 
         <!-- 手前の水面と泡 -->
-        <path d="M 0,352 Q 90,340 160,350 Q 235,336 300,348 Q 380,334 452,350 Q 522,340 560,352 L 560,402 Q 400,384 300,390 Q 150,384 0,398 Z" fill="#A5D8EC" opacity="0.85"/>
-        <ellipse cx="250" cy="356" rx="150" ry="18" fill="#EAFAFF" opacity="0.7"/>
+        <path d="M 0,352 Q 90,340 160,350 Q 235,336 300,348 Q 380,334 452,350 Q 522,340 560,352 L 560,404 Q 400,386 300,392 Q 150,386 0,400 Z" fill="url(#mWater)" opacity="0.9"/>
+        <ellipse cx="250" cy="356" rx="160" ry="16" fill="#EAFBFF" opacity="0.65" filter="url(#mSoft2)"/>
         <!-- しぶき -->
-        <path d="M 150,352 Q 132,326 140,300 Q 118,326 126,354 Z" fill="#EAFAFF" opacity="0.9"/>
-        <path d="M 360,352 Q 380,320 372,296 Q 400,322 388,356 Z" fill="#EAFAFF" opacity="0.9"/>
-        <circle cx="120" cy="322" r="6" fill="#DFF4FB"/>
-        <circle cx="140" cy="296" r="4" fill="#DFF4FB"/>
-        <circle cx="392" cy="300" r="6" fill="#DFF4FB"/>
-        <circle cx="372" cy="278" r="4" fill="#DFF4FB"/>
-        <circle cx="300" cy="344" r="4" fill="#DFF4FB"/>
-        <path d="M 80,372 Q 150,360 220,372" stroke="#EAFAFF" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
-        <path d="M 330,376 Q 420,364 500,376" stroke="#EAFAFF" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M 150,352 Q 128,322 138,294 Q 116,322 122,356 Z" fill="#EAFBFF" opacity="0.9" filter="url(#mSoft2)"/>
+        <path d="M 364,352 Q 386,318 376,292 Q 406,320 392,358 Z" fill="#EAFBFF" opacity="0.9" filter="url(#mSoft2)"/>
+        <g fill="#DFF4FB">
+          <circle cx="118" cy="320" r="6"/><circle cx="138" cy="292" r="4"/>
+          <circle cx="396" cy="298" r="6"/><circle cx="376" cy="274" r="4"/>
+          <circle cx="300" cy="342" r="4"/><circle cx="330" cy="330" r="3"/>
+        </g>
+        <path d="M 80,372 Q 150,360 220,372" stroke="#EAFBFF" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M 330,376 Q 420,364 500,376" stroke="#EAFBFF" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
       </svg>
     </div>
     <div id="mosaTapHint">タップで閉じる</div>
